@@ -241,7 +241,7 @@ def _pep8_violations(report_file):
     ("system=", "s", "System to act on"),
 ])
 @timed
-def run_pep8(options):  # pylint: disable=unused-argument
+def run_pep8(_options):
     """
     Run pep8 on system code.
     Fail the task if any violations are found.
@@ -696,7 +696,6 @@ def run_quality(options):
     :param: p, diff-quality will fail if the quality percentage calculated is
         below this percentage. For example, if p is set to 80, and diff-quality finds
         quality of the branch vs the compare branch is less than 80%, then this task will fail.
-        This threshold would be applied to both pep8 and pylint.
     """
     # Directory to put the diff reports in.
     # This makes the folder if it doesn't already exist.
@@ -707,7 +706,7 @@ def run_quality(options):
 
     def _lint_output(linter, count, violations_list, is_html=False, limit=0):
         """
-        Given a count & list of pep8 violations, pretty-print the pep8 output.
+        Given a count & list of pylint violations, pretty-print the output.
         If `is_html`, will print out with HTML markup.
         """
         if is_html:
@@ -743,9 +742,7 @@ def run_quality(options):
     # Generate diff-quality html report for pylint, and print to console
     # If pylint reports exist, use those
     # Otherwise, `diff-quality` will call pylint itself
-
     (count, violations_list) = _get_pylint_violations(clean=False)
-
     _, upper_violations_limit, _, _ = _parse_pylint_options(options)
 
     # Print number of violations to log
